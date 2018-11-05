@@ -1,0 +1,89 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:4595857216016928018",
+      "lastPropertyId": "5:6997449790968031001",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:1730022971777013481",
+          "name": "id"
+        },
+        {
+          "id": "4:1988843430929132635",
+          "name": "login"
+        },
+        {
+          "id": "5:6997449790968031001",
+          "name": "password"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:811143619012537616",
+      "lastPropertyId": "7:6352682487627016074",
+      "name": "Flat",
+      "properties": [
+        {
+          "id": "1:4554908498017434024",
+          "name": "id"
+        },
+        {
+          "id": "2:8311439237250004998",
+          "name": "street"
+        },
+        {
+          "id": "3:9037423677626375249",
+          "name": "price"
+        },
+        {
+          "id": "4:377084694399713463",
+          "indexId": "2:3248996063586291449",
+          "name": "userId"
+        },
+        {
+          "id": "5:1656041710285402154",
+          "name": "area"
+        },
+        {
+          "id": "6:6466455832727644860",
+          "name": "room"
+        },
+        {
+          "id": "7:6352682487627016074",
+          "name": "floor"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "4:811143619012537616",
+  "lastIndexId": "2:3248996063586291449",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [
+    1321762617503224260,
+    1251453984221661672
+  ],
+  "retiredIndexUids": [
+    6597633255217829225
+  ],
+  "retiredPropertyUids": [
+    1460650316948185282,
+    9048562240056419899,
+    7395726347043817783,
+    6736356224774322726,
+    3915933466647424102,
+    5408453937394356632,
+    1602687332592556246,
+    1017915136841864730
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
