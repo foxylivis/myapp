@@ -31,6 +31,8 @@ class ListActivity: AppCompatActivity() {
     private lateinit var userBox: Box<User>
     private  lateinit var userQuery: Query<User>
 
+    private lateinit var listView: ListView
+
     private val CTX_MENU_DEL = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,10 +71,11 @@ class ListActivity: AppCompatActivity() {
     private fun setUpView() {
         flatsAdapter = FlatAdapter()
 
-        findViewById<ListView>(R.id.listView).apply {
+        listView = findViewById<ListView>(R.id.listView).apply {
             adapter = flatsAdapter
             onItemClickListener = flatClickListener
         }
+        registerForContextMenu(listView)
 
         findViewById<FloatingActionButton>(R.id.fab).apply { setOnClickListener(onFabClickListener) }
 
@@ -106,7 +109,7 @@ class ListActivity: AppCompatActivity() {
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menu.add(Menu.NONE, CTX_MENU_DEL, Menu.NONE, "Удалить")
+        menu!!.add(Menu.NONE, CTX_MENU_DEL, Menu.NONE, "Удалить")
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
