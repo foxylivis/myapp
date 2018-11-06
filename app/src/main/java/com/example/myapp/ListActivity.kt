@@ -51,6 +51,7 @@ class ListActivity: AppCompatActivity() {
     }
 
     private fun loadUser(){
+        val mew = 1
         prefUserId = getSharedPreferences("MyPref",MODE_PRIVATE)
         idUser = prefUserId.getLong("idUser", 0)
         userQuery = userBox.query().equal(User_.id, idUser).build()
@@ -60,9 +61,9 @@ class ListActivity: AppCompatActivity() {
 
     private fun removeUser(){
         prefUserId = getSharedPreferences("MyPref",MODE_PRIVATE)
-        var edId : SharedPreferences.Editor = prefUserId.edit()
+        val edId : SharedPreferences.Editor = prefUserId.edit()
         edId.putLong("idUser", -1)
-        edId.commit()
+        edId.apply()
     }
 
     private fun setUpView() {
