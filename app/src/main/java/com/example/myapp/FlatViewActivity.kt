@@ -6,18 +6,19 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ListView
 import android.widget.TextView
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
+import android.R
+import android.widget.ArrayAdapter
+
+
 
 class FlatViewActivity: AppCompatActivity()  {
 
-    private lateinit var textViewStreet: TextView
-    private lateinit var textViewPrice: TextView
-    private lateinit var textViewArea: TextView
-    private lateinit var textViewCost: TextView
-    private lateinit var textViewRoom: TextView
-    private lateinit var textViewFloor: TextView
+
+    private lateinit var listView: ListView
 
     private lateinit var flatBox: Box<Flat>
 
@@ -43,18 +44,15 @@ class FlatViewActivity: AppCompatActivity()  {
 
     private fun setUpViews() {
 
-        textViewStreet = findViewById<TextView>(R.id.textViewStreet).apply {
+        listView = findViewById<ListView>(R.id.listViewFlat).apply {
+
         }
-        textViewPrice = findViewById<TextView>(R.id.textViewPrice).apply {
-        }
-        textViewArea = findViewById<TextView>(R.id.textViewArea).apply {
-        }
-        textViewFloor = findViewById<TextView>(R.id.textViewFloor).apply {
-        }
-        textViewRoom = findViewById<TextView>(R.id.textViewRoom).apply {
-        }
-        textViewCost = findViewById<TextView>(R.id.textViewCost).apply {
-        }
+
+        val mSports = arrayOf("Бицепс", "Грудь", "Ноги", "Плечи", "Пресс", "Спина", "Трицепс")
+
+        val flatAdapter = ArrayAdapter<String>(this, R.layout.l, mSports)
+
+
         val extras = intent.extras
         if (extras != null) {
             idFlat = extras.getLong("idFlat")
