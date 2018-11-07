@@ -1,15 +1,23 @@
 package com.example.myapp
 
+import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class FlatAdapter: BaseAdapter() {
+ class FlatAdapter: BaseAdapter() {
+
+
+    private var STRING_RUB: String = " руб."
+
+    private var STRING_M2: String = " кв.м."
 
     private val dataset: MutableList<Flat> = mutableListOf()
 
+  // var latinit res:Resources
 
     private class FlatViewHolder(itemView: View){
         val street: TextView = itemView.findViewById(R.id.textViewStreet)
@@ -22,7 +30,6 @@ class FlatAdapter: BaseAdapter() {
             clear()
             addAll(flats)
         }
-        //mew
         notifyDataSetChanged()
     }
 
@@ -35,8 +42,8 @@ class FlatAdapter: BaseAdapter() {
         val flat = getItem(position)
         if (flat != null) {
             holder.street.text = flat.street
-            holder.area.text = flat.area.toString()
-            holder.price.text = flat.price.toString()
+            holder.area.text = flat.area.toString() //+ resources.getString(R.string.rub)
+            holder.price.text = flat.price.toString() + STRING_RUB
         } else {
             holder.street.text = ""
             holder.area.text = ""

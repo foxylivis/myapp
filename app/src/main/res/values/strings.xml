@@ -10,4 +10,21 @@
     <string name="activityMain">Добро пожаловать!</string>
     <string name="menu_edit">Редактировать</string>
     <string name="menu_logout">Разлогиниться</string>
+    <string name="password_user">Пароль</string>
+    <string name="login_user">Логин</string>
+
+
+    <string name="address">Адрес</string>
+    <string name="price">Цена</string>
+    <string name="area">Площадь</string>
+    <string name="floor">Этаж</string>
+    <string name="room">Количество комнат</string>
+
+    <string name="title_flat">Заголовок</string>
+    <string name="value_flat">Значение</string>
+
+
+    <string name="rub">" руб."</string>
+    <string name="m2">" кв. м."</string>
+
 </resources>

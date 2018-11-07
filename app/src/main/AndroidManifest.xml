@@ -12,26 +12,35 @@
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-           >
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity"></activity>
+        <activity android:name=".ListActivity"
+            android:screenOrientation="portrait"
+            ></activity>
 
-        <activity android:name=".FlatAddActivity">
+        <activity android:name=".FlatAddActivity"
+            android:screenOrientation="portrait"
+            >
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.example.myapp.FlatAddActivity" />
     </activity>
-        <activity android:name=".FlatViewActivity">
+        <activity android:name=".FlatViewActivity"
+            android:screenOrientation="portrait"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.myapp.FlatAddActivity" />
         </activity>
-        <activity android:name=".FlatEditActivity">
+        <activity android:name=".FlatEditActivity"
+            android:screenOrientation="portrait"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.myapp.FlatAddActivity" />

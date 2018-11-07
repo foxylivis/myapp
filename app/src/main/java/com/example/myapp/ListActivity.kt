@@ -35,6 +35,8 @@ class ListActivity: AppCompatActivity() {
 
     private val CTX_MENU_DEL = 10
 
+    private var CTX_TITLE_DEL: String = "Удалить"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -53,7 +55,6 @@ class ListActivity: AppCompatActivity() {
     }
 
     private fun loadUser(){
-        val mew = 1
         prefUserId = getSharedPreferences("MyPref",MODE_PRIVATE)
         idUser = prefUserId.getLong("idUser", 0)
         userQuery = userBox.query().equal(User_.id, idUser).build()
@@ -109,7 +110,7 @@ class ListActivity: AppCompatActivity() {
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menu!!.add(Menu.NONE, CTX_MENU_DEL, Menu.NONE, "Удалить")
+        menu.add(Menu.NONE, CTX_MENU_DEL, Menu.NONE, CTX_TITLE_DEL)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {

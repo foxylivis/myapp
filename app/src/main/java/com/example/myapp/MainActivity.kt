@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.support.design.widget.TextInputLayout
 import android.view.View
 import android.widget.Button
@@ -11,17 +13,22 @@ import android.widget.Toast
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 import io.objectbox.query.Query
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var textInputLogin: TextInputLayout
     private lateinit var textInputPass: TextInputLayout
-    private lateinit var loginButton: Button;
-    private lateinit var regButton: Button;
+    private lateinit var loginButton: Button
+    private lateinit var regButton: Button
 
-    private var idUser: Long = 0;
-    private var logUser: String = "";
-    private var passUser: String = "";
+    private var idUser: Long = 0
+    private var logUser: String = ""
+    private var passUser: String = ""
 
     private lateinit var userBox: Box<User>
     private lateinit var userQuery: Query<User>
@@ -29,17 +36,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefUserId: SharedPreferences
 
     private var MESS_USER_EXISTS: String = "Такой пользователь уже существует."
-    private var MESS_INVALID: String = "Не верный ввод"
+    private var MESS_INVALID: String = "Используется недопустимый символ"
     private var MESS_EMPTY: String = "Поле не может быть пустым"
     private var MESS_LOGIN_PASS_INVALID: String = "Не верный логин или пароль."
+    //private var MESS_NULL: String = "null"
     private var REG_LOG: String = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     private var REG_PASS: String =  "^[а-яА-ЯёЁa-zA-Z0-9]+$"
-
+    private var log_err:  String = ""
+    private var pass_err:  String = ""
+    private var MESS_USER_ADD: String = " успешно добавлен!"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setUpViews();
+        setUpViews()
 
         userBox = ObjectBox.boxStore.boxFor()
 
@@ -47,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         if(idUser>=0){
             goList()
         }
+
     }
 
     private fun setUpViews() {
@@ -72,66 +83,68 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkLog(log:String):Boolean{
-        userQuery = userBox.query().equal(User_.login, log).build()
-        val user = userQuery.findUnique()
-        if(user!=null){
-            return true
-        } else {
-            return false
-        }
-    }
-
-    private fun checkLogEmpty(log:String):Boolean{
-        if(log.isEmpty()){
-            textInputLogin.setError(MESS_EMPTY)
+    private fun checkLog(log:String):Boolean {
+        if (log.isEmpty()) {
+            log_err = MESS_EMPTY
             return false
         } else {
-            textInputLogin.setError(null)
-            return true
-        }
-    }
-
-    private fun checkLogCorrect(log:String):Boolean{
-        if(!log.matches(REG_LOG.toRegex()) ){
-            textInputLogin.setError(MESS_INVALID)
-            return false
-        } else {
-            textInputLogin.setError(null)
-            return true
-        }
-    }
-
-    private fun checkPassCorrect(pass:String):Boolean{
-        if(!pass.matches(REG_PASS.toRegex())){
-            textInputPass.setError(MESS_INVALID)
-            return false
-        } else {
-            textInputPass.setError(null)
-            return true
-        }
-    }
-
-    private fun checkPassEmpty(pass:String):Boolean{
-        if(pass.isEmpty()){
-            textInputPass.setError(MESS_EMPTY)
-            return false
-        } else {
-            textInputPass.setError(null)
-            return true
-        }
-    }
-
-    private fun allCheckforReg ():Boolean {
-        if (!checkLog(logUser)) {
-            if ((checkLogEmpty(logUser) and checkPassEmpty(passUser)) && (checkLogCorrect(logUser) and checkPassCorrect(passUser))) {
-                return true
-            } else {
+            if (!log.matches(REG_LOG.toRegex())) {
+                log_err = MESS_INVALID
                 return false
+            } else {
+                userQuery = userBox.query().equal(User_.login, log).build()
+                val user = userQuery.findUnique()
+                if (user != null) {
+                    log_err = MESS_USER_EXISTS
+                    return false
+                } else {
+                    log_err = ""
+                    return true
+                }
             }
-        } else {
-            showMessage(MESS_USER_EXISTS)
+        }
+    }
+
+    private fun checkPass(pass:String):Boolean {
+        if(pass.isEmpty()){
+            pass_err = MESS_EMPTY
             return false
+        } else {
+            if(!pass.matches(REG_PASS.toRegex())){
+               pass_err = MESS_INVALID
+                return false
+            } else {
+                pass_err = ""
+                return true
+            }
+        }
+    }
+
+    private fun allCheckforReg () {
+
+        var checkLogBool = false
+        var checkPassBool = false
+
+        val logCheck = async(CommonPool) {
+            checkLog(logUser)
+        }
+        val passCheck = async(CommonPool) {
+            checkPass(passUser)
+        }
+
+        launch(UI) {
+            checkLogBool = logCheck.await()
+            checkPassBool = passCheck.await()
+            if (log_err.isEmpty()) {
+                textInputLogin.setError(null)
+            } else {textInputLogin.setError(log_err)}
+            if (pass_err.isEmpty()) {
+                textInputPass.setError(null)
+            } else {textInputPass.setError(pass_err)}
+            if (checkLogBool and checkPassBool){
+                textInputPass.setError(checkLogBool.toString())
+                addUser()
+            }
         }
     }
 
@@ -152,13 +165,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveUser(id: Long){
         prefUserId = getSharedPreferences("MyPref",MODE_PRIVATE)
-        var edId : SharedPreferences.Editor = prefUserId.edit()
+        val edId : SharedPreferences.Editor = prefUserId.edit()
         edId.putLong("idUser", id)
-        edId.commit()
+        edId.apply()
     }
 
     private fun loadUser():Long{
-        var id: Long
+        val id: Long
         prefUserId = getSharedPreferences("MyPref",MODE_PRIVATE)
         id = prefUserId.getLong("idUser", -1)
         return id
@@ -167,13 +180,14 @@ class MainActivity : AppCompatActivity() {
     private fun addUser() {
         val user = User(login = logUser, password = passUser)
         userBox.put(user)
+        Toast.makeText(this, logUser + MESS_USER_ADD, Toast.LENGTH_LONG).show()
     }
 
     fun onButtonClickLogin(view: View) {
         dataInfo()
         if (checkLogPass(logUser, passUser)){
             goList()
-        }
+         }
         else
         {
             showMessage(MESS_LOGIN_PASS_INVALID)
@@ -182,7 +196,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onButtonClickReg(view: View) {
         dataInfo()
-        if(allCheckforReg()){addUser()}
+        allCheckforReg()
     }
 
     private fun showMessage(message: String){

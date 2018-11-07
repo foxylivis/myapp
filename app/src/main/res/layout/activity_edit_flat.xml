@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,7 +15,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Адрес"
+            android:hint="@string/address"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -30,7 +29,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Цена"
+            android:hint="@string/price"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -46,9 +45,9 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Площадь"
+            android:hint="@string/area"
             android:inputType="text"
-            android:colorControlNormal = "@color/colorAccent"/>
+            />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +60,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Этаж"
+            android:hint="@string/floor"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -75,7 +74,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Количество комнат"
+            android:hint="@string/room"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -87,7 +86,7 @@
 
         <Button
             android:id="@+id/buttonEdit"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onEditButtonClick"

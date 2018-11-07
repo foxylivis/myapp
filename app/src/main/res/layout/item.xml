@@ -11,23 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        tools:text="Street" />
+        android:textColor="@color/colorAccent"
+        tools:text="@string/address" />
 
-
-    <TextView
-    android:id="@+id/textViewArea"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="12sp"
-    tools:text="Price" />
 
     <TextView
         android:id="@+id/textViewPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        tools:text="Price" />
+        tools:text="@string/price" />
 
+    <TextView
+    android:id="@+id/textViewArea"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="12sp"
+    tools:text="@string/area" />
 
 
 </LinearLayout>

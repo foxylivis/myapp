@@ -11,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:textSize="12sp"
-        tools:text="Заголовок" />
+        android:textSize="14sp"
+        tools:text="@string/title_flat" />
 
 
     <TextView
         android:id="@+id/textViewValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        tools:text="Значение" />
+        android:textSize="12sp"
+        tools:text="@string/value_flat" />
 
 </LinearLayout>
