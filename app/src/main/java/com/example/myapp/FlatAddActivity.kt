@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 
@@ -22,6 +23,8 @@ class FlatAddActivity: AppCompatActivity()  {
     private lateinit var flatBox: Box<Flat>
 
     private lateinit var userBox: Box<User>
+
+    private var MESS_ERR: String = "Введите правильные значения"
 
     var idUser: Long=0
 
@@ -57,6 +60,10 @@ class FlatAddActivity: AppCompatActivity()  {
         }
     }
 
+    private fun showMessage(mess:String){
+        Toast.makeText(this, mess, Toast.LENGTH_LONG).show()
+    }
+
     private fun loadUser(){
         prefUserId = getSharedPreferences("MyPref", AppCompatActivity.MODE_PRIVATE)
         idUser = prefUserId.getLong("idUser", 0)
@@ -64,10 +71,10 @@ class FlatAddActivity: AppCompatActivity()  {
 
     fun onAddButtonClick(view: View) {
         addFlat()
-        goBack()
     }
 
     private fun addFlat() {
+        try{
         val streetText = textInputStreet.getEditText()!!.getText().toString().trim()
         val priceDouble = textInputPrice.getEditText()!!.getText().toString().trim().toDouble()
         val areaDouble = textInputArea.getEditText()!!.getText().toString().trim().toDouble()
@@ -79,6 +86,11 @@ class FlatAddActivity: AppCompatActivity()  {
         val user = userBox.get(idUser)
         user.flat.add(flat)
         userBox.put(user)
+            goBack()
+        }
+        catch(e: Exception) {
+            showMessage(MESS_ERR)
+        }
     }
 
     private fun goBack() {

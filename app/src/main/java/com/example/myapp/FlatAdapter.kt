@@ -10,11 +10,6 @@ import android.widget.TextView
 
  class FlatAdapter: BaseAdapter() {
 
-
-    private var STRING_RUB: String = " руб."
-
-    private var STRING_M2: String = " кв.м."
-
     private val dataset: MutableList<Flat> = mutableListOf()
 
   // var latinit res:Resources
@@ -41,9 +36,11 @@ import android.widget.TextView
 
         val flat = getItem(position)
         if (flat != null) {
+
+            val context: View? = view
             holder.street.text = flat.street
-            holder.area.text = flat.area.toString() //+ resources.getString(R.string.rub)
-            holder.price.text = flat.price.toString() + STRING_RUB
+            holder.area.text = flat.area.toString() + context?.getResources()?.getString(R.string.m2)
+            holder.price.text = flat.price.toString() + context?.getResources()?.getString(R.string.rub)
         } else {
             holder.street.text = ""
             holder.area.text = ""

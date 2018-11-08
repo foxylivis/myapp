@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="12dp">
 
 
     <android.support.design.widget.TextInputLayout
@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/address"
+            android:textSize="18sp"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/price"
+            android:textSize="18sp"
             android:inputType="numberDecimal" />
 
     </android.support.design.widget.TextInputLayout>
@@ -46,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/area"
+            android:textSize="18sp"
             android:inputType="numberDecimal"
             />
 
@@ -61,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/floor"
+            android:textSize="18sp"
             android:inputType="number" />
 
     </android.support.design.widget.TextInputLayout>
@@ -75,6 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/room"
+            android:textSize="18sp"
             android:inputType="number" />
 
     </android.support.design.widget.TextInputLayout>

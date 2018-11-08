@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 
@@ -18,6 +19,8 @@ class FlatEditActivity: AppCompatActivity()  {
     private lateinit var textInputArea: TextInputLayout
     private lateinit var textInputRoom: TextInputLayout
     private lateinit var textInputFloor: TextInputLayout
+
+    private var MESS_ERR: String = "Введите правильные значения"
 
     private lateinit var flatBox: Box<Flat>
 
@@ -62,19 +65,19 @@ class FlatEditActivity: AppCompatActivity()  {
 
             val streetFlat = flatBox.query().equal(Flat_.id, idFlat).build()
                     .property(Flat_.street)
-                    .findString();
+                    .findString()
             val priceFlat = flatBox.query().equal(Flat_.id, idFlat).build()
                     .property(Flat_.price)
-                    .findDouble();
+                    .findDouble()
             val areaFlat = flatBox.query().equal(Flat_.id, idFlat).build()
                     .property(Flat_.area)
-                    .findDouble();
+                    .findDouble()
             val floorFlat = flatBox.query().equal(Flat_.id, idFlat).build()
                     .property(Flat_.floor)
-                    .findInt();
+                    .findInt()
             val roomFlat = flatBox.query().equal(Flat_.id, idFlat).build()
                     .property(Flat_.room)
-                    .findInt();
+                    .findInt()
 
             textInputStreet.getEditText()!!.setText(streetFlat.toString())
             textInputPrice.getEditText()!!.setText(priceFlat.toString())
@@ -87,10 +90,10 @@ class FlatEditActivity: AppCompatActivity()  {
 
     fun onEditButtonClick(view: View) {
         editFlat()
-        goBack()
     }
 
     private fun editFlat() {
+        try{
         val streetText = textInputStreet.getEditText()!!.getText().toString().trim()
         val priceDouble = textInputPrice.getEditText()!!.getText().toString().trim().toDouble()
         val areaDouble = textInputArea.getEditText()!!.getText().toString().trim().toDouble()
@@ -106,6 +109,16 @@ class FlatEditActivity: AppCompatActivity()  {
         user.flat.add(flat)
 
         userBox.put(user)
+        
+        goBack()
+        }
+            catch(e: Exception){
+                showMessage(MESS_ERR)
+            }
+    }
+
+    private fun showMessage(mess: String) {
+        Toast.makeText(this, mess, Toast.LENGTH_LONG).show()
     }
 
     private fun loadUser(){
