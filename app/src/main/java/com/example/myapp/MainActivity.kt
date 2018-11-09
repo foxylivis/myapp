@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         if(idUser>=0){
             goList()
         }
-
     }
 
     private fun setUpViews() {
@@ -195,13 +194,17 @@ class MainActivity : AppCompatActivity() {
 
     fun onButtonClickLogin(view: View) {
         dataInfo()
-        if (checkLogPass(logUser, passUser)){
+        val logPassCheck = async(CommonPool) {
+        checkLogPass(logUser, passUser)
+        }
+        launch(UI) {
+        if (logPassCheck.await()){
             goList()
          }
         else
         {
             showMessage(MESS_LOGIN_PASS_INVALID)
-        }
+        }}
     }
 
     fun onButtonClickReg(view: View) {
