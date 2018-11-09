@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="14dp">
+    android:padding="@dimen/padding">
 
     <TextView
         android:id="@+id/textViewStreet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_size_title"
         android:textColor="@color/colorAccent"
         tools:text="@string/address" />
 
@@ -19,14 +19,14 @@
         android:id="@+id/textViewPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="@dimen/font_size_text"
         tools:text="@string/price" />
 
     <TextView
     android:id="@+id/textViewArea"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="16sp"
+    android:textSize="@dimen/font_size_text"
     tools:text="@string/area" />
 
 

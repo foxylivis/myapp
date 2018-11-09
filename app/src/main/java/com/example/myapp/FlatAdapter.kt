@@ -6,17 +6,17 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
- class FlatAdapter: BaseAdapter() {
+class FlatAdapter : BaseAdapter() {
 
     private val dataset: MutableList<Flat> = mutableListOf()
 
-    private class FlatViewHolder(itemView: View){
+    private class FlatViewHolder(itemView: View) {
         val street: TextView = itemView.findViewById(R.id.textViewStreet)
         val area: TextView = itemView.findViewById(R.id.textViewArea)
         val price: TextView = itemView.findViewById(R.id.textViewPrice)
     }
 
-    fun setFlats(flats: List<Flat>){
+    fun setFlats(flats: List<Flat>) {
         dataset.apply {
             clear()
             addAll(flats)
@@ -25,9 +25,10 @@ import android.widget.TextView
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?:LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false).also {
-            it.tag = FlatViewHolder(it)
-        }
+        val view = convertView
+                ?: LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false).also {
+                    it.tag = FlatViewHolder(it)
+                }
         val holder = view.tag as FlatViewHolder
 
         val flat = getItem(position)
@@ -35,15 +36,15 @@ import android.widget.TextView
 
             val context: View? = view
             holder.street.text = flat.street
-            holder.area.text = flat.area.toString() + context?.getResources()?.getString(R.string.m2)
-            holder.price.text = flat.price.toString() + context?.getResources()?.getString(R.string.rub)
+            holder.area.text = context?.resources?.getString(R.string.m2, flat.area)
+            holder.price.text = context?.resources?.getString(R.string.rub, flat.price)
         } else {
             holder.street.text = ""
             holder.area.text = ""
             holder.price.text = ""
         }
 
-        return  view
+        return view
     }
 
     override fun getItem(position: Int): Flat? {
@@ -56,5 +57,5 @@ import android.widget.TextView
 
     override fun getItemId(position: Int): Long = dataset[position].id
 
-    override fun getCount(): Int  = dataset.size
+    override fun getCount(): Int = dataset.size
 }

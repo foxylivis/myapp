@@ -7,7 +7,6 @@
     <string name="button_delete">Удалить</string>
     <string name="button_change">Изменить</string>
     <string name="button_cancel">Отмена</string>
-    <string name="activityMain">Добро пожаловать!</string>
     <string name="menu_edit">Редактировать</string>
     <string name="menu_logout">Разлогиниться</string>
     <string name="password_user">Пароль</string>
@@ -24,7 +23,23 @@
     <string name="value_flat">Значение</string>
 
 
-    <string name="rub">" руб."</string>
-    <string name="m2">" кв. м."</string>
+    <string name="rub">%f руб.</string>
+    <string name="m2">%f кв. м.</string>
+
+    <string name="mess_user_exists">Такой пользователь уже существует</string>
+    <string name="mess_invalid">Используется недопустимый символ</string>
+    <string name="mess_empty">Поле не может быть пустым</string>
+    <string name="mess_login_and_pass_invalid">Не верный логин или пароль</string>
+    <string name="mess_user_add">" успешно добавлен!"</string>
+    <string name="ctx_title_del">Удалить</string>
+
+    <string name="string_address">Адрес</string>
+    <string name="string_price">Цена</string>
+    <string name="string_area">Площадь</string>
+    <string name="string_floor">Этаж</string>
+    <string name="string_room">Количество комнат</string>
+    <string name="string_cost">Цена за кв. м.</string>
+    <string name="mess_err">Введите правильные значения</string>
+
 
 </resources>

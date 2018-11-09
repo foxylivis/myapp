@@ -37,15 +37,11 @@ class MainActivity : AppCompatActivity() {
 
     var logOrRegBool = true
 
-    private var MESS_USER_EXISTS: String = "Такой пользователь уже существует."
-    private var MESS_INVALID: String = "Используется недопустимый символ"
-    private var MESS_EMPTY: String = "Поле не может быть пустым"
-    private var MESS_LOGIN_PASS_INVALID: String = "Не верный логин или пароль."
     private var REG_LOG: String = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-    private var REG_PASS: String =  "^[а-яА-ЯёЁa-zA-Z0-9]+$"
-    private var log_err:  String = ""
-    private var pass_err:  String = ""
-    private var MESS_USER_ADD: String = " успешно добавлен!"
+    private var REG_PASS: String = "^[а-яА-ЯёЁa-zA-Z0-9]+$"
+
+    private var log_err: String = ""
+    private var pass_err: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,73 +51,73 @@ class MainActivity : AppCompatActivity() {
         userBox = ObjectBox.boxStore.boxFor()
 
         idUser = loadUser()
-        if(idUser>=0){
+        if (idUser >= 0) {
             goList()
         }
     }
 
     private fun setUpViews() {
-        textInputLogin = findViewById<TextInputLayout>(R.id.text_input_log).apply {  }
-        textInputPass = findViewById<TextInputLayout>(R.id.text_input_pass).apply {  }
-        loginButton = findViewById<Button>(R.id.buttonLogin).apply {  }
-        regButton = findViewById<Button>(R.id.buttonReg).apply{ setVisibility(View.GONE)}
-        textViewReg = findViewById<TextView>(R.id.textViewReg).apply{}
+        textInputLogin = findViewById(R.id.text_input_log)
+        textInputPass = findViewById(R.id.text_input_pass)
+        loginButton = findViewById(R.id.buttonLogin)
+        regButton = findViewById<Button>(R.id.buttonReg).apply { visibility = View.GONE }
+        textViewReg = findViewById(R.id.textViewReg)
     }
 
-    private fun dataInfo(){
-        logUser = textInputLogin.getEditText()!!.getText().toString().trim()
-        passUser = textInputPass.getEditText()!!.getText().toString().trim()
+    private fun dataInfo() {
+        logUser = textInputLogin.editText!!.text.toString().trim()
+        passUser = textInputPass.editText!!.text.toString().trim()
     }
 
-    private fun checkLogPass(log:String, pass:String):Boolean {
+    private fun checkLogPass(log: String, pass: String): Boolean {
         userQuery = userBox.query().equal(User_.login, log).equal(User_.password, pass).build()
         val user = userQuery.findUnique()
-        if(user!=null){
+        return if (user != null) {
             idUser = userQuery.property(User_.id).findLong()
-                    return true}
-        else{
-            return false
+            true
+        } else {
+            false
         }
     }
 
-    private fun checkLog(log:String):Boolean {
+    private fun checkLog(log: String): Boolean {
         if (log.isEmpty()) {
-            log_err = MESS_EMPTY
+            log_err = getString(R.string.mess_empty)
             return false
         } else {
-            if (!log.matches(REG_LOG.toRegex())) {
-                log_err = MESS_INVALID
-                return false
+            return if (!log.matches(REG_LOG.toRegex())) {
+                log_err = getString(R.string.mess_invalid)
+                false
             } else {
                 userQuery = userBox.query().equal(User_.login, log).build()
                 val user = userQuery.findUnique()
                 if (user != null) {
-                    log_err = MESS_USER_EXISTS
-                    return false
+                    log_err = getString(R.string.mess_user_exists)
+                    false
                 } else {
                     log_err = ""
-                    return true
+                    true
                 }
             }
         }
     }
 
-    private fun checkPass(pass:String):Boolean {
-        if(pass.isEmpty()){
-            pass_err = MESS_EMPTY
-            return false
+    private fun checkPass(pass: String): Boolean {
+        return if (pass.isEmpty()) {
+            pass_err = getString(R.string.mess_empty)
+            false
         } else {
-            if(!pass.matches(REG_PASS.toRegex())){
-               pass_err = MESS_INVALID
-                return false
+            if (!pass.matches(REG_PASS.toRegex())) {
+                pass_err = getString(R.string.mess_invalid)
+                false
             } else {
                 pass_err = ""
-                return true
+                true
             }
         }
     }
 
-    private fun allCheckforReg () {
+    private fun allCheckforReg() {
 
         var checkLogBool = false
         var checkPassBool = false
@@ -137,33 +133,37 @@ class MainActivity : AppCompatActivity() {
             checkLogBool = logCheck.await()
             checkPassBool = passCheck.await()
             if (log_err.isEmpty()) {
-                textInputLogin.setError(null)
-            } else {textInputLogin.setError(log_err)}
+                textInputLogin.error = null
+            } else {
+                textInputLogin.error = log_err
+            }
             if (pass_err.isEmpty()) {
-                textInputPass.setError(null)
-            } else {textInputPass.setError(pass_err)}
-            if (checkLogBool and checkPassBool){
+                textInputPass.error = null
+            } else {
+                textInputPass.error = pass_err
+            }
+            if (checkLogBool and checkPassBool) {
                 addUser()
             }
         }
     }
 
-    private fun viewButtons(){
-        if (logOrRegBool){
-            logOrRegBool =false
-            textViewReg.setText(getString(R.string.button_log))
-            loginButton.setVisibility(View.GONE)
-            regButton.setVisibility(View.VISIBLE)
-        }else{
-            logOrRegBool =true;
-            textViewReg.setText(getString(R.string.button_reg))
-            loginButton.setVisibility(View.VISIBLE)
-            regButton.setVisibility(View.GONE)
+    private fun viewButtons() {
+        if (logOrRegBool) {
+            logOrRegBool = false
+            textViewReg.text = getString(R.string.button_log)
+            loginButton.visibility = View.GONE
+            regButton.visibility = View.VISIBLE
+        } else {
+            logOrRegBool = true
+            textViewReg.text = getString(R.string.button_reg)
+            loginButton.visibility = View.VISIBLE
+            regButton.visibility = View.GONE
         }
     }
 
 
-    private fun goList(){
+    private fun goList() {
         val intent = Intent(this, ListActivity::class.java)
 
         saveUser(idUser)
@@ -171,39 +171,37 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun saveUser(id: Long){
-        prefUserId = getSharedPreferences("MyPref",MODE_PRIVATE)
-        val edId : SharedPreferences.Editor = prefUserId.edit()
+    private fun saveUser(id: Long) {
+        prefUserId = getSharedPreferences("MyPref", MODE_PRIVATE)
+        val edId: SharedPreferences.Editor = prefUserId.edit()
         edId.putLong("idUser", id)
         edId.apply()
     }
 
-    private fun loadUser():Long{
-        val id: Long
-        prefUserId = getSharedPreferences("MyPref",MODE_PRIVATE)
-        id = prefUserId.getLong("idUser", -1)
+    private fun loadUser(): Long {
+        prefUserId = getSharedPreferences("MyPref", MODE_PRIVATE)
+        val id = prefUserId.getLong("idUser", -1)
         return id
     }
 
     private fun addUser() {
         val user = User(login = logUser, password = passUser)
         userBox.put(user)
-        Toast.makeText(this, logUser + MESS_USER_ADD, Toast.LENGTH_LONG).show()
+        showMessage(logUser + getString(R.string.mess_user_add))
     }
 
     fun onButtonClickLogin(view: View) {
         dataInfo()
         val logPassCheck = async(CommonPool) {
-        checkLogPass(logUser, passUser)
+            checkLogPass(logUser, passUser)
         }
         launch(UI) {
-        if (logPassCheck.await()){
-            goList()
-         }
-        else
-        {
-            showMessage(MESS_LOGIN_PASS_INVALID)
-        }}
+            if (logPassCheck.await()) {
+                goList()
+            } else {
+                showMessage(getString(R.string.mess_login_and_pass_invalid))
+            }
+        }
     }
 
     fun onButtonClickReg(view: View) {
@@ -215,7 +213,7 @@ class MainActivity : AppCompatActivity() {
         viewButtons()
     }
 
-    private fun showMessage(message: String){
+    private fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 

@@ -10,7 +10,7 @@ import android.widget.ListView
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 
-class FlatViewActivity: AppCompatActivity()  {
+class FlatViewActivity : AppCompatActivity() {
 
     private lateinit var listView: ListView
 
@@ -22,21 +22,10 @@ class FlatViewActivity: AppCompatActivity()  {
 
     var flatArr = ArrayList<FlatItem>()
 
-    var idUser: Long=0
-    var idFlat: Long=0
+    var idUser: Long = 0
+    var idFlat: Long = 0
 
     private lateinit var prefUserId: SharedPreferences
-
-    private var STRING_RUB: String = " руб."
-
-    private var STRING_M2: String = " кв.м."
-
-    private var STRING_ADDRESS: String =  "Адрес"
-    private var STRING_PRICE: String = "Цена"
-    private var STRING_AREA: String =  "Площадь"
-    private var STRING_FLOOR: String = "Этаж"
-    private var STRING_ROOM: String =  "Количество комнат"
-    private var STRING_COST: String =  "Цена за кв. м."
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,16 +66,16 @@ class FlatViewActivity: AppCompatActivity()  {
                     .property(Flat_.room)
                     .findInt()
 
-            flatArr.add(FlatItem(STRING_ADDRESS, streetFlat.toString()))
-            flatArr.add(FlatItem(STRING_PRICE, priceFlat.toString() + getString(R.string.rub)))
-            flatArr.add(FlatItem(STRING_AREA, areaFlat.toString() + STRING_M2))
-            flatArr.add(FlatItem(STRING_FLOOR, floorFlat.toString()))
-            flatArr.add(FlatItem(STRING_ROOM, roomFlat.toString()))
+            flatArr.add(FlatItem(getString(R.string.string_address), streetFlat.toString()))
+            flatArr.add(FlatItem(getString(R.string.string_price), priceFlat.toString() + getString(R.string.rub)))
+            flatArr.add(FlatItem(getString(R.string.string_area), areaFlat.toString() + getString(R.string.m2)))
+            flatArr.add(FlatItem(getString(R.string.string_floor), floorFlat.toString()))
+            flatArr.add(FlatItem(getString(R.string.string_room), roomFlat.toString()))
 
             val area = areaFlat
             val price = priceFlat
             val costFlat = price / area
-            flatArr.add(FlatItem(STRING_COST, String.format("%.2f", costFlat)+ STRING_RUB))
+            flatArr.add(FlatItem(getString(R.string.string_cost), String.format("%.2f", costFlat) + getString(R.string.rub)))
         }
     }
 
@@ -97,15 +86,15 @@ class FlatViewActivity: AppCompatActivity()  {
 
         listView = findViewById<ListView>(R.id.listViewFlat).apply {
             adapter = flatViewAdapter
-              }
+        }
     }
 
-    private fun loadUser(){
+    private fun loadUser() {
         prefUserId = getSharedPreferences("MyPref", AppCompatActivity.MODE_PRIVATE)
         idUser = prefUserId.getLong("idUser", 0)
     }
 
-    private fun goEdit(){
+    private fun goEdit() {
         val intent = Intent(this, FlatEditActivity::class.java)
         intent.putExtra("idFlat", idFlat)
         finish()
@@ -113,19 +102,19 @@ class FlatViewActivity: AppCompatActivity()  {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        getMenuInflater().inflate(R.menu.menu_edit, menu)
+        menuInflater.inflate(R.menu.menu_edit, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item?.getItemId()
-        when (id) {
+        val id = item?.itemId
+        return when (id) {
             R.id.edit -> {
                 goEdit()
-                return true
+                true
             }
             else -> {
-                return super.onOptionsItemSelected(item)
+                super.onOptionsItemSelected(item)
             }
         }
     }

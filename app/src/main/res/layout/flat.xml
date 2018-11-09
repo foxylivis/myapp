@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/padding">
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_size_title"
         tools:text="@string/title_flat" />
 
 
@@ -19,7 +19,7 @@
         android:id="@+id/textViewValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="@dimen/font_size_text"
         tools:text="@string/value_flat" />
 
 </LinearLayout>

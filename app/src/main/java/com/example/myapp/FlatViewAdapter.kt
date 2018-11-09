@@ -19,6 +19,7 @@ class FlatViewAdapter : BaseAdapter() {
         }
         this.context = context
     }
+
     override fun getView(position: Int, _convertView: View?, parent: ViewGroup?): View {
 
         val inflater = LayoutInflater.from(context)
@@ -29,8 +30,8 @@ class FlatViewAdapter : BaseAdapter() {
         val headerFlat = convertView.findViewById(R.id.textViewTitle) as TextView
         val valueFlat = convertView.findViewById(R.id.textViewValue) as TextView
 
-        headerFlat.setText(flatArr.get(position).headerFlat)
-        valueFlat.setText(flatArr.get(position).valueFlat)
+        headerFlat.text = flatArr.get(position).headerFlat
+        valueFlat.text = flatArr.get(position).valueFlat
 
         return convertView
     }

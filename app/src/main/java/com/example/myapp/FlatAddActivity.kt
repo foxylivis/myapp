@@ -11,7 +11,7 @@ import android.widget.Toast
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 
-class FlatAddActivity: AppCompatActivity()  {
+class FlatAddActivity : AppCompatActivity() {
 
     private lateinit var addFlatButton: Button
     private lateinit var textInputStreet: TextInputLayout
@@ -24,9 +24,7 @@ class FlatAddActivity: AppCompatActivity()  {
 
     private lateinit var userBox: Box<User>
 
-    private var MESS_ERR: String = "Введите правильные значения"
-
-    var idUser: Long=0
+    var idUser: Long = 0
 
     private lateinit var prefUserId: SharedPreferences
 
@@ -46,25 +44,19 @@ class FlatAddActivity: AppCompatActivity()  {
 
     private fun setUpViews() {
 
-        addFlatButton = findViewById<Button>(R.id.buttonAdd).apply { }
-
-        textInputStreet = findViewById<TextInputLayout>(R.id.text_input_street).apply {
-        }
-        textInputPrice = findViewById<TextInputLayout>(R.id.text_input_price).apply {
-        }
-        textInputArea = findViewById<TextInputLayout>(R.id.text_input_area).apply {
-        }
-        textInputFloor = findViewById<TextInputLayout>(R.id.text_input_floor).apply {
-        }
-        textInputRoom = findViewById<TextInputLayout>(R.id.text_input_room).apply {
-        }
+        addFlatButton = findViewById(R.id.buttonAdd)
+        textInputStreet = findViewById(R.id.text_input_street)
+        textInputPrice = findViewById(R.id.text_input_price)
+        textInputArea = findViewById(R.id.text_input_area)
+        textInputFloor = findViewById(R.id.text_input_floor)
+        textInputRoom = findViewById(R.id.text_input_room)
     }
 
-    private fun showMessage(mess:String){
+    private fun showMessage(mess: String) {
         Toast.makeText(this, mess, Toast.LENGTH_LONG).show()
     }
 
-    private fun loadUser(){
+    private fun loadUser() {
         prefUserId = getSharedPreferences("MyPref", AppCompatActivity.MODE_PRIVATE)
         idUser = prefUserId.getLong("idUser", 0)
     }
@@ -74,22 +66,21 @@ class FlatAddActivity: AppCompatActivity()  {
     }
 
     private fun addFlat() {
-        try{
-        val streetText = textInputStreet.getEditText()!!.getText().toString().trim()
-        val priceDouble = textInputPrice.getEditText()!!.getText().toString().trim().toDouble()
-        val areaDouble = textInputArea.getEditText()!!.getText().toString().trim().toDouble()
-        val floorInt = textInputFloor.getEditText()!!.getText().toString().trim().toInt()
-        val roomInt = textInputRoom.getEditText()!!.getText().toString().trim().toInt()
+        try {
+            val streetText = textInputStreet.editText!!.text.toString().trim()
+            val priceDouble = textInputPrice.editText!!.text.toString().trim().toDouble()
+            val areaDouble = textInputArea.editText!!.text.toString().trim().toDouble()
+            val floorInt = textInputFloor.editText!!.text.toString().trim().toInt()
+            val roomInt = textInputRoom.editText!!.text.toString().trim().toInt()
 
-        val flat = Flat(street = streetText, price = priceDouble, area = areaDouble, floor = floorInt, room = roomInt)
+            val flat = Flat(street = streetText, price = priceDouble, area = areaDouble, floor = floorInt, room = roomInt)
 
-        val user = userBox.get(idUser)
-        user.flat.add(flat)
-        userBox.put(user)
+            val user = userBox.get(idUser)
+            user.flat.add(flat)
+            userBox.put(user)
             goBack()
-        }
-        catch(e: Exception) {
-            showMessage(MESS_ERR)
+        } catch (e: Exception) {
+            showMessage(getString(R.string.mess_err))
         }
     }
 

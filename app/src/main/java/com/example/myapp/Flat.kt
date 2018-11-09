@@ -5,7 +5,6 @@ import io.objectbox.annotation.Id
 import io.objectbox.relation.ToOne
 
 
-
 @Entity
 data class Flat(
         @Id var id: Long = 0,
@@ -16,7 +15,6 @@ data class Flat(
         var room: Int = 0, // Количество комнат
         var floor: Int = 0//Этаж
 
-)
-{
+) {
     lateinit var user: ToOne<User>
 }
