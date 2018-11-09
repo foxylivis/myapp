@@ -1,7 +1,5 @@
 package com.example.myapp
 
-import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +9,6 @@ import android.widget.TextView
  class FlatAdapter: BaseAdapter() {
 
     private val dataset: MutableList<Flat> = mutableListOf()
-
-  // var latinit res:Resources
 
     private class FlatViewHolder(itemView: View){
         val street: TextView = itemView.findViewById(R.id.textViewStreet)

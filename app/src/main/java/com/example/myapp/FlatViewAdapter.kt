@@ -8,10 +8,6 @@ import android.widget.TextView
 import android.view.LayoutInflater
 
 
-
-
-
-
 class FlatViewAdapter : BaseAdapter() {
 
     var flatArr = ArrayList<FlatItem>()

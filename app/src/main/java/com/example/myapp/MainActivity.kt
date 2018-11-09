@@ -4,11 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.support.design.widget.TextInputLayout
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textInputPass: TextInputLayout
     private lateinit var loginButton: Button
     private lateinit var regButton: Button
+    private lateinit var textViewReg: TextView
 
     private var idUser: Long = 0
     private var logUser: String = ""
@@ -35,11 +35,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var prefUserId: SharedPreferences
 
+    var logOrRegBool = true
+
     private var MESS_USER_EXISTS: String = "Такой пользователь уже существует."
     private var MESS_INVALID: String = "Используется недопустимый символ"
     private var MESS_EMPTY: String = "Поле не может быть пустым"
     private var MESS_LOGIN_PASS_INVALID: String = "Не верный логин или пароль."
-    //private var MESS_NULL: String = "null"
     private var REG_LOG: String = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     private var REG_PASS: String =  "^[а-яА-ЯёЁa-zA-Z0-9]+$"
     private var log_err:  String = ""
@@ -64,7 +65,8 @@ class MainActivity : AppCompatActivity() {
         textInputLogin = findViewById<TextInputLayout>(R.id.text_input_log).apply {  }
         textInputPass = findViewById<TextInputLayout>(R.id.text_input_pass).apply {  }
         loginButton = findViewById<Button>(R.id.buttonLogin).apply {  }
-        regButton = findViewById<Button>(R.id.buttonReg).apply{}
+        regButton = findViewById<Button>(R.id.buttonReg).apply{ setVisibility(View.GONE)}
+        textViewReg = findViewById<TextView>(R.id.textViewReg).apply{}
     }
 
     private fun dataInfo(){
@@ -148,15 +150,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun viewButtons(){
+        if (logOrRegBool){
+            logOrRegBool =false
+            textViewReg.setText(getString(R.string.button_log))
+            loginButton.setVisibility(View.GONE)
+            regButton.setVisibility(View.VISIBLE)
+        }else{
+            logOrRegBool =true;
+            textViewReg.setText(getString(R.string.button_reg))
+            loginButton.setVisibility(View.VISIBLE)
+            regButton.setVisibility(View.GONE)
+        }
+    }
+
 
     private fun goList(){
         val intent = Intent(this, ListActivity::class.java)
-
-        //mew
-        /*
-        userQuery = userBox.query().build()
-        val user = userQuery.find()
-        Toast.makeText(this, idUser.toString() + " " + user.size.toString(), Toast.LENGTH_LONG).show()*/
 
         saveUser(idUser)
         finish()
@@ -197,6 +207,10 @@ class MainActivity : AppCompatActivity() {
     fun onButtonClickReg(view: View) {
         dataInfo()
         allCheckforReg()
+    }
+
+    fun onTextViewClick(view: View) {
+        viewButtons()
     }
 
     private fun showMessage(message: String){
