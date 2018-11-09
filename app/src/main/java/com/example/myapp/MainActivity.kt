@@ -143,7 +143,6 @@ class MainActivity : AppCompatActivity() {
                 textInputPass.setError(null)
             } else {textInputPass.setError(pass_err)}
             if (checkLogBool and checkPassBool){
-                textInputPass.setError(checkLogBool.toString())
                 addUser()
             }
         }
