@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">myapp</string>
+    <string name="app_name">Каталог недвижимости</string>
     <string name="button_reg">Регистрация</string>
     <string name="button_log">Вход</string>
     <string name="button_add">Добавить</string>
