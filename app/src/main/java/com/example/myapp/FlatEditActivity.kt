@@ -84,6 +84,7 @@ class FlatEditActivity : AppCompatActivity() {
         editFlat()
     }
 
+
     private fun editFlat() {
         try {
             val streetText = textInputStreet.editText!!.text.toString().trim()

@@ -30,8 +30,8 @@ class FlatViewAdapter : BaseAdapter() {
         val headerFlat = convertView.findViewById(R.id.textViewTitle) as TextView
         val valueFlat = convertView.findViewById(R.id.textViewValue) as TextView
 
-        headerFlat.text = flatArr.get(position).headerFlat
-        valueFlat.text = flatArr.get(position).valueFlat
+        headerFlat.text = flatArr[position].headerFlat
+        valueFlat.text = flatArr[position].valueFlat
 
         return convertView
     }

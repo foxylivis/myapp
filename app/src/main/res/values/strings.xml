@@ -23,8 +23,8 @@
     <string name="value_flat">Значение</string>
 
 
-    <string name="rub">%f руб.</string>
-    <string name="m2">%f кв. м.</string>
+    <string name="rub">%.2f руб.</string>
+    <string name="m2">%.2f кв. м.</string>
 
     <string name="mess_user_exists">Такой пользователь уже существует</string>
     <string name="mess_invalid">Используется недопустимый символ</string>

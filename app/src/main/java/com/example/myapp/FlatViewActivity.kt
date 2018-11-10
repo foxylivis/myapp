@@ -67,15 +67,13 @@ class FlatViewActivity : AppCompatActivity() {
                     .findInt()
 
             flatArr.add(FlatItem(getString(R.string.string_address), streetFlat.toString()))
-            flatArr.add(FlatItem(getString(R.string.string_price), priceFlat.toString() + getString(R.string.rub)))
-            flatArr.add(FlatItem(getString(R.string.string_area), areaFlat.toString() + getString(R.string.m2)))
+            flatArr.add(FlatItem(getString(R.string.string_price), getString(R.string.rub, priceFlat)))
+            flatArr.add(FlatItem(getString(R.string.string_area), getString(R.string.m2, areaFlat)))
             flatArr.add(FlatItem(getString(R.string.string_floor), floorFlat.toString()))
             flatArr.add(FlatItem(getString(R.string.string_room), roomFlat.toString()))
 
-            val area = areaFlat
-            val price = priceFlat
-            val costFlat = price / area
-            flatArr.add(FlatItem(getString(R.string.string_cost), String.format("%.2f", costFlat) + getString(R.string.rub)))
+            val costFlat = priceFlat / areaFlat
+            flatArr.add(FlatItem(getString(R.string.string_cost),   getString(R.string.rub, costFlat)))
         }
     }
 

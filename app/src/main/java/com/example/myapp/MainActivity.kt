@@ -180,8 +180,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadUser(): Long {
         prefUserId = getSharedPreferences("MyPref", MODE_PRIVATE)
-        val id = prefUserId.getLong("idUser", -1)
-        return id
+        return prefUserId.getLong("idUser", -1)
     }
 
     private fun addUser() {
