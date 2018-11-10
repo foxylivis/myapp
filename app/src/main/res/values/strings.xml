@@ -41,5 +41,9 @@
     <string name="string_cost">Цена за кв. м.</string>
     <string name="mess_err">Введите правильные значения</string>
 
+    <string name="title_view_flat">Просмотр</string>
+    <string name="title_add_flat">Добавление</string>
+    <string name="title_edit_flat">Редактирование</string>
+
 
 </resources>

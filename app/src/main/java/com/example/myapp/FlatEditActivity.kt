@@ -14,7 +14,6 @@ import io.objectbox.kotlin.boxFor
 class FlatEditActivity : AppCompatActivity() {
 
     private lateinit var addFlatButton: Button
-    private lateinit var textInputStreet: TextInputLayout
     private lateinit var textInputPrice: TextInputLayout
     private lateinit var textInputArea: TextInputLayout
     private lateinit var textInputRoom: TextInputLayout
@@ -45,7 +44,6 @@ class FlatEditActivity : AppCompatActivity() {
     private fun setUpViews() {
 
         addFlatButton = findViewById(R.id.buttonEdit)
-        textInputStreet = findViewById(R.id.text_input_street)
         textInputPrice = findViewById(R.id.text_input_price)
         textInputArea = findViewById(R.id.text_input_area)
         textInputFloor = findViewById(R.id.text_input_floor)
@@ -55,9 +53,6 @@ class FlatEditActivity : AppCompatActivity() {
         if (extras != null) {
             idFlat = extras.getLong("idFlat")
 
-            val streetFlat = flatBox.query().equal(Flat_.id, idFlat).build()
-                    .property(Flat_.street)
-                    .findString()
             val priceFlat = flatBox.query().equal(Flat_.id, idFlat).build()
                     .property(Flat_.price)
                     .findDouble()
@@ -71,11 +66,12 @@ class FlatEditActivity : AppCompatActivity() {
                     .property(Flat_.room)
                     .findInt()
 
-            textInputStreet.editText!!.setText(streetFlat.toString())
             textInputPrice.editText!!.setText(priceFlat.toString())
             textInputArea.editText!!.setText(areaFlat.toString())
             textInputFloor.editText!!.setText(floorFlat.toString())
             textInputRoom.editText!!.setText(roomFlat.toString())
+
+            this.title = getString(R.string.title_edit_flat)
         }
 
     }
@@ -87,13 +83,15 @@ class FlatEditActivity : AppCompatActivity() {
 
     private fun editFlat() {
         try {
-            val streetText = textInputStreet.editText!!.text.toString().trim()
+            val streetFlat = flatBox.query().equal(Flat_.id, idFlat).build()
+                    .property(Flat_.street)
+                    .findString()
             val priceDouble = textInputPrice.editText!!.text.toString().trim().toDouble()
             val areaDouble = textInputArea.editText!!.text.toString().trim().toDouble()
             val floorInt = textInputFloor.editText!!.text.toString().trim().toInt()
             val roomInt = textInputRoom.editText!!.text.toString().trim().toInt()
 
-            val flat = Flat(id = idFlat, street = streetText, price = priceDouble, area = areaDouble, floor = floorInt, room = roomInt)
+            val flat = Flat(id = idFlat, street = streetFlat, price = priceDouble, area = areaDouble, floor = floorInt, room = roomInt)
 
             flatBox.put(flat)
 

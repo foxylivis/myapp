@@ -74,6 +74,7 @@ class FlatViewActivity : AppCompatActivity() {
 
             val costFlat = priceFlat / areaFlat
             flatArr.add(FlatItem(getString(R.string.string_cost),   getString(R.string.rub, costFlat)))
+
         }
     }
 
@@ -85,6 +86,8 @@ class FlatViewActivity : AppCompatActivity() {
         listView = findViewById<ListView>(R.id.listViewFlat).apply {
             adapter = flatViewAdapter
         }
+
+        this.title = getString(R.string.title_view_flat)
     }
 
     private fun loadUser() {

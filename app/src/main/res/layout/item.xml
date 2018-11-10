@@ -14,6 +14,12 @@
         android:textColor="@color/colorAccent"
         tools:text="@string/address" />
 
+    <TextView
+        android:id="@+id/textViewArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_text"
+        tools:text="@string/area" />
 
     <TextView
         android:id="@+id/textViewPrice"
@@ -22,12 +28,6 @@
         android:textSize="@dimen/font_size_text"
         tools:text="@string/price" />
 
-    <TextView
-    android:id="@+id/textViewArea"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="@dimen/font_size_text"
-    tools:text="@string/area" />
 
 
 </LinearLayout>

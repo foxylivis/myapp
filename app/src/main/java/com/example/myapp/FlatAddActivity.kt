@@ -50,6 +50,8 @@ class FlatAddActivity : AppCompatActivity() {
         textInputArea = findViewById(R.id.text_input_area)
         textInputFloor = findViewById(R.id.text_input_floor)
         textInputRoom = findViewById(R.id.text_input_room)
+
+        this.title = getString(R.string.title_add_flat)
     }
 
     private fun showMessage(mess: String) {
